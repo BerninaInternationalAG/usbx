@@ -229,7 +229,7 @@ extern   "C" {
 
 #define UX_OHCI_PRSC_EVENT                                  0x1u
 
-#define UX_OHCI_PRSC_EVENT_TIMEOUT                          100
+#define UX_OHCI_PRSC_EVENT_TIMEOUT                          200
 
 /* Define OHCI HCCA structure.  */
 
