@@ -189,6 +189,14 @@ UX_SLAVE_CLASS_RNDIS    *rndis;
             
             /* Check the return status. If no error, we set the interrupt pipe to reply response available.  
               All RNDIS events are on the interrupt endpoint IN, from the host.  */
+            /* The host can issue an encapsulated command before the data
+               interface has been activated.  In that case there is no
+               interrupt endpoint on which to advertise the response yet. */
+            if (rndis -> ux_slave_class_rndis_interrupt_endpoint == UX_NULL)
+            {
+                _ux_device_stack_endpoint_stall(&device -> ux_slave_device_control_endpoint);
+                return(UX_ERROR);
+            }
             transfer_request_in =  &rndis -> ux_slave_class_rndis_interrupt_endpoint -> ux_slave_endpoint_transfer_request;
 
             /* Reset the buffer.  */
@@ -226,4 +234,3 @@ UX_SLAVE_CLASS_RNDIS    *rndis;
     /* It's handled.  */
     return(UX_SUCCESS);
 }
-

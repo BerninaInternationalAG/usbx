@@ -207,6 +207,9 @@ ULONG                       physical_address_lsw;
                                         &rndis -> ux_slave_class_rndis_network_handle,
                                         physical_address_msw,
                                         physical_address_lsw);
+
+        /* Make the USB Ethernet interface available to NetX Duo. */
+        _ux_network_driver_link_up(rndis -> ux_slave_class_rndis_network_handle);
                 
         /* Reset the endpoint buffers.  */
 #if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && !defined(UX_DEVICE_CLASS_RNDIS_ZERO_COPY)
