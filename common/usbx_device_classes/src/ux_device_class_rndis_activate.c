@@ -109,7 +109,8 @@ ULONG                       physical_address_lsw;
     interface_ptr =  (UX_SLAVE_INTERFACE  *) command -> ux_slave_class_command_interface;
     
     /* Check if this is the Control or Data interface.  */
-    if (command -> ux_slave_class_command_class == UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_CONTROL)
+    if (command -> ux_slave_class_command_class == UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_CONTROL ||
+        command -> ux_slave_class_command_class == UX_DEVICE_CLASS_RNDIS_CLASS_WIRELESS_CONTROLLER)
     {
 
         /* Store the class instance into the interface.  */

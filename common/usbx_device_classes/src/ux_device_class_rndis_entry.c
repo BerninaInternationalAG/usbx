@@ -109,6 +109,7 @@ UINT        status;
 
         /* Check the CLASS definition in the interface descriptor. */
         if (command -> ux_slave_class_command_class == UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_CONTROL ||
+                command -> ux_slave_class_command_class == UX_DEVICE_CLASS_RNDIS_CLASS_WIRELESS_CONTROLLER ||
                 command -> ux_slave_class_command_class == UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_DATA)
             return(UX_SUCCESS);
         else

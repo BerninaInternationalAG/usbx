@@ -132,6 +132,7 @@ VOID  _ux_network_driver_link_down(VOID *ux_network_handle);
 
 /* Define generic RNDIS equivalences.  */
 #define UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_CONTROL                       0x02
+#define UX_DEVICE_CLASS_RNDIS_CLASS_WIRELESS_CONTROLLER                         0xE0
 #define UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_DATA                          0x0A
 #define UX_DEVICE_CLASS_RNDIS_NEW_INTERRUPT_EVENT                               1
 #define UX_DEVICE_CLASS_RNDIS_NEW_BULKOUT_EVENT                                 2
