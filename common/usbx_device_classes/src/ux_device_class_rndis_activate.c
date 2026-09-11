@@ -194,20 +194,28 @@ ULONG                       physical_address_lsw;
             /* Not all endpoints have been found. Major error, do not proceed.  */
             return(UX_ERROR);
 
-        /* Declare the link to be up. That may need to change later to make it dependent on the
-           WAN/Wireless modem.  */
-        rndis -> ux_slave_class_rndis_link_state = UX_DEVICE_CLASS_RNDIS_LINK_STATE_UP;
-
         /* Setup the physical address of this IP instance.  */
         physical_address_msw =  (ULONG)((rndis -> ux_slave_class_rndis_local_node_id[0] << 8) | (rndis -> ux_slave_class_rndis_local_node_id[1]));
         physical_address_lsw =  (ULONG)((rndis -> ux_slave_class_rndis_local_node_id[2] << 24) | (rndis -> ux_slave_class_rndis_local_node_id[3] << 16) | 
                                                        (rndis -> ux_slave_class_rndis_local_node_id[4] << 8) | (rndis -> ux_slave_class_rndis_local_node_id[5]));
             
         /* Register this interface to the NetX USB interface broker.  */
-        _ux_network_driver_activate((VOID *) rndis, _ux_device_class_rndis_write,
+        if (_ux_network_driver_activate((VOID *) rndis, _ux_device_class_rndis_write,
                                         &rndis -> ux_slave_class_rndis_network_handle,
                                         physical_address_msw,
-                                        physical_address_lsw);
+                                        physical_address_lsw) != USB_NETWORK_DRIVER_SUCCESS)
+        {
+
+            /* Registration failed; the network handle cannot be used.  */
+            rndis -> ux_slave_class_rndis_link_state = UX_DEVICE_CLASS_RNDIS_LINK_STATE_DOWN;
+            return(UX_ERROR);
+        }
+
+        /* Declare the link to be up after successful registration.  */
+        rndis -> ux_slave_class_rndis_link_state = UX_DEVICE_CLASS_RNDIS_LINK_STATE_UP;
+
+        /* Make the USB Ethernet interface available to NetX Duo. */
+        _ux_network_driver_link_up(rndis -> ux_slave_class_rndis_network_handle);
                 
         /* Reset the endpoint buffers.  */
 #if (UX_DEVICE_ENDPOINT_BUFFER_OWNER == 1) && !defined(UX_DEVICE_CLASS_RNDIS_ZERO_COPY)
