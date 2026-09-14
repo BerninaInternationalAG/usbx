@@ -104,7 +104,8 @@ UX_SLAVE_CLASS              *class_ptr;
     
     /* Check if this is the Control or Data interface.  We only need to dismount the link and abort the
        transfer once for the 2 classes.  */
-    if (interface_ptr -> ux_slave_interface_descriptor.bInterfaceClass == UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_CONTROL)
+    if (interface_ptr -> ux_slave_interface_descriptor.bInterfaceClass == UX_DEVICE_CLASS_RNDIS_CLASS_COMMUNICATION_CONTROL ||
+        interface_ptr -> ux_slave_interface_descriptor.bInterfaceClass == UX_DEVICE_CLASS_RNDIS_CLASS_WIRELESS_CONTROLLER)
     {
     
         /* Declare the link to be down. That may need to change later to make it dependant on the
