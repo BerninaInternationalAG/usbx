@@ -312,7 +312,8 @@ ULONG            status;
         
             break;
 
-         case UX_DEVICE_CLASS_RNDIS_OID_802_3_CURRENT_ADDRESS            :
+        case UX_DEVICE_CLASS_RNDIS_OID_802_3_PERMANENT_ADDRESS           :
+        case UX_DEVICE_CLASS_RNDIS_OID_802_3_CURRENT_ADDRESS            :
  
             
             /* Save the Hardware address in the return message.   */
